@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.1",
+    "mongoose": "^6.1.1"
+  },
+  "name": "backconsultas",
+  "description": "API de consultas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiubademy/BackConsultas.git"
+  },
+  "keywords": [
+    "consultas"
+  ],
+  "author": "grupo 9 - taller de programación II",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fiubademy/BackConsultas/issues"
+  },
+  "homepage": "https://github.com/fiubademy/BackConsultas#readme"
+}
