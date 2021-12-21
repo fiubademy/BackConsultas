@@ -1,57 +1,40 @@
-const Contact = require('../models/chats-model');
+const Token = require('../models/token');
 
-function add_msg (req,res){
-    let chat = new Chat({
-        message: req.body.message,
-        sender: req.body.sender,
-        receiver: req.body.receiver
+
+function register_token (req,res){
+    let token = new Token({
+        token: req.body.token,
     });
 
-    chat.save( (error,result) => {
+    token.save( (error,result) => {
         if (error){
-            return res.status(500).json({
-                error: true,
-                message: `Server error: ${error}`,
-                code: 0
-            });
+            return res.status(500).json(`Server error: ${error}`);
         }
-
         if ( !result ){
-            return res.status(400).json({
-                error: true,
-                message: `Client error: ${error}`,
-                code: 20
-            });
+            return res.status(400).json(`Client error: ${error}`);
         }
-
-        return res.status(200).json({
-            error: false,
-            message: 'Success',
-            data: result,
-            code: 10
-        });
-
+        return res.status(200).json(result);
     });
 }
 
-function get_chat (req,res){
-    return res.status(500).json({
-        error: true,
-        message: `Unimplemented: ${error}`,
-        code: 0
-    });
+function delete_token (req,res){
+    Token.deleteOne({ token: req.body.token}).exec( (error, msg) => {
+        if (error){
+            return res.status(500).json(`Server error: ${error}`);
+        }
+        return res.status(200).json(msg);
+    })
 }
 
-function get_open_chats (req,res){
+function send_msg (req,res){
+    // contectarse a firebase cloud messaging para enviar la notificacion al usuario receiver
     return res.status(500).json({
-        error: true,
-        message: `Unimplemented: ${error}`,
-        code: 0
-    });
+        message: "unimplemented FCM"
+    })
 }
 
 module.exports = {
-    get_chat: get_chat,
-    add_msg: add_msg,
-    get_open_chats: get_open_chats
+    register_token: register_token,
+    delete_token: delete_token,
+    send_msg: send_msg,
 };
