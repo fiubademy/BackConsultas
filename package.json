@@ -3,14 +3,17 @@
     "axios": "^0.24.0",
     "body-parser": "^1.19.1",
     "express": "^4.17.1",
-    "mongoose": "^6.1.1"
+    "mocha": "^9.1.3",
+    "mongoose": "^6.1.1",
+    "prettier": "^2.5.1"
   },
   "name": "backconsultas",
   "description": "API de consultas",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive --exit",
+    "lint": "npx prettier --write .",
     "start": "node app"
   },
   "repository": {
