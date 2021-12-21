@@ -1,9 +1,6 @@
 const axios = require('axios')
 const Token = require('../models/token');
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
 
 function update_token (req,res){
     let token = new Token({
@@ -24,9 +21,6 @@ function update_token (req,res){
 
 
 function notify_user (req,res){
-    // recibe un userId y un mensaje y manda la notificación
-
-    // chequear si el token expiro con 'updatedAt'. Si expiro, borrarlo y devolver 404
     const token = Token.findById({ user_id: req.body.userId }).exec( (error, result) => { 
         if (error){
             return res.status(500).json(`Server error: ${error}`);
