@@ -1,4 +1,16 @@
+import { admin } from './firebase-config'
 const Token = require('../models/token');
+var admin = require("firebase-admin");
+var serviceAccount = require("../ubademy-333005-firebase-adminsdk-nx2ut-1362938c8f.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const notification_options = {
+    priority: "high",
+    timeToLive: 60 * 60 * 24
+  };
 
 
 function register_token (req,res){
@@ -27,10 +39,18 @@ function delete_token (req,res){
 }
 
 function send_msg (req,res){
-    // contectarse a firebase cloud messaging para enviar la notificacion al usuario receiver
-    return res.status(500).json({
-        message: "unimplemented FCM"
-    })
+    // recibe el token del sender y el user_id del receiver
+    const registrationToken = req.body.registrationToken
+    const message = "You have a new message."
+    const options =  notification_options
+    
+      admin.messaging().sendToDevice(registrationToken, message, options)
+      .then( response => {
+        res.status(200).send("Notification sent successfully")
+      })
+      .catch( error => {
+        console.log(error);
+      });
 }
 
 module.exports = {
