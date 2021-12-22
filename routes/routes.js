@@ -1,5 +1,5 @@
-const update_token = require("../controllers/updateToken");
-const notify_user = require("../controllers/notifyUser");
+const update_token = require("../controllers/update_token");
+const notify_user = require("../controllers/notify_user");
 
 function update_token_route() {
   return {

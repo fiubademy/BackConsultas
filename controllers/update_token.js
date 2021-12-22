@@ -8,8 +8,7 @@ function schema() {
         token: { type: "string" },
         user_id: { type: "string" },
       },
-    },
-    required: ["user_id", "token"],
+    }
   };
 }
 
