@@ -1,6 +1,8 @@
 const axios = require("axios");
 const Token = require("../models/token");
 
+const firebase_key = "AAAAiALA1kU:APA91bH93BUMODE0gqqXftgn1sZlLiI2gLelpsguZT0L63HLSLPVutH-ncsuCAMCCvdimMMtIoQKIs0zHbfsMA8yPUwUpjoa1dRwq6ZbYiTkqcBDhDOWnfIOyomv8WaikKlfepkwLA9-"
+
 function schema() {
   return {
     body: {
@@ -25,9 +27,14 @@ function handler() {
         }
       }
     );
+    const config = {
+      headers: {
+        header1: firebase_key,
+      }
+    };
 
     const payload = {
-      registration_ids: token,
+      to: token,
       notification: {
         title: "New message",
         body: req.body.message,
@@ -35,7 +42,7 @@ function handler() {
     };
 
     axios
-      .post("https://fcm.googleapis.com/fcm/send", payload)
+      .post("https://fcm.googleapis.com/fcm/send", payload, config)
       .then((res) => {
         return reply.code(200).send(res);
       })
