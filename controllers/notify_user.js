@@ -17,27 +17,22 @@ function schema() {
 
 function handler() {
   return async function (req, reply) {
-    const token = Token.findById({ user_id: req.body.user_id }).exec(
-      (error, result) => {
-        if (error) {
-          return reply.code(500).send(`Server error: ${error}`);
-        }
-        if (!result) {
-          return reply.code(404).send(`No user found.`);
-        }
-      }
-    );
+    const token = await Token.findOne({ user_id: req.body.user_id });
+    if (token == null) {
+      reply.code(404).send("No FCM token found for user.")
+    }
     const config = {
-      headers: {
-        header1: firebase_key,
-      }
-    };
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `key=${firebase_key}`,
+        }
+      };
 
     const payload = {
-      to: token,
-      notification: {
-        title: "New message",
-        body: req.body.message,
+      "to": token.token,
+      "notification": {
+        "title": "New message",
+        "body": req.body.message.toString(),
       },
     };
 
@@ -47,7 +42,7 @@ function handler() {
         return reply.code(200).send(res);
       })
       .catch((error) => {
-        return reply.code(500).send(`Server error: ${error}`);
+        return reply.code(500).send(`Server error on send notification: ${error}`);
       });
   };
 }
