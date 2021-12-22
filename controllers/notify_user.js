@@ -8,7 +8,7 @@ function schema() {
     body: {
       type: "object",
       properties: {
-        receiver_id: { type: "string" },
+        user_id: { type: "string" },
         message: { type: "string" },
       },
     }
