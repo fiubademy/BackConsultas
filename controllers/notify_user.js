@@ -19,7 +19,7 @@ function handler() {
   return async function (req, reply) {
     const token = await Token.findOne({ user_id: req.body.user_id });
     if (token == null) {
-      reply.code(404).send("No FCM token found for user.")
+      reply.code(404).send({body: "No FCM token found for user."})
     }
     const config = {
       headers: { 
@@ -32,17 +32,17 @@ function handler() {
       "to": token.token,
       "notification": {
         "title": "New message",
-        "body": req.body.message.toString(),
+        "body": req.body.message,
       },
     };
 
     axios
-      .post("https://fcm.googleapis.com/fcm/send", JSON.stringify(payload), config)
+      .post("https://fcm.googleapis.com/fcm/send", payload, config)
       .then((res) => {
         return reply.code(200).send(res.data);
       })
       .catch((error) => {
-        return reply.code(500).send(`Server error on send notification: ${error}`);
+        return reply.code(500).send({body: `Server error on send notification: ${error}`});
       });
   };
 }
