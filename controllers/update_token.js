@@ -14,12 +14,19 @@ function schema() {
 
 function handler() {
   return async function (req, reply) {
-    let token = new Token({
+    const filter = {
+      user_id: req.body.user_id
+    };
+    const update = {
       token: req.body.token,
-      user_id: req.body.user_id,
-    });
+      createdAt: new Date()
+    };
+    const options = {
+      new: true,
+      upsert: true
+    };
 
-    token.save((error, result) => {
+    Token.findOneAndUpdate(filter, update, options, (error, result) => {
       if (error) {
         return reply.code(500).send(`Server error: ${error}`);
       }
