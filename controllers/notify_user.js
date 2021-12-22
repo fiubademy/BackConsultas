@@ -44,7 +44,7 @@ function handler() {
       })
       .catch((error) => {
         return reply
-          .code(500)
+          .code(401)
           .send(`Server error on send notification: ${error}`);
       });
   };
