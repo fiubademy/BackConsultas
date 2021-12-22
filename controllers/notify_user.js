@@ -37,9 +37,9 @@ function handler() {
     };
 
     axios
-      .post("https://fcm.googleapis.com/fcm/send", payload, config)
+      .post("https://fcm.googleapis.com/fcm/send", JSON.stringify(payload), config)
       .then((res) => {
-        return reply.code(200).send(res);
+        return reply.code(200).send(res.data);
       })
       .catch((error) => {
         return reply.code(500).send(`Server error on send notification: ${error}`);
