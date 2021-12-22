@@ -9,8 +9,7 @@ function schema() {
         receiver_id: { type: "string" },
         message: { type: "string" },
       },
-    },
-    required: ["receiver_id", "message"],
+    }
   };
 }
 
