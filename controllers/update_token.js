@@ -8,22 +8,22 @@ function schema() {
         token: { type: "string" },
         user_id: { type: "string" },
       },
-    }
+    },
   };
 }
 
 function handler() {
   return async function (req, reply) {
     const filter = {
-      user_id: req.body.user_id
+      user_id: req.body.user_id,
     };
     const update = {
       token: req.body.token,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
     const options = {
       new: true,
-      upsert: true
+      upsert: true,
     };
 
     Token.findOneAndUpdate(filter, update, options, (error, result) => {
