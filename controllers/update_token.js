@@ -18,7 +18,7 @@ function handler() {
       user_id: req.body.user_id,
     };
     const update = {
-      token: req.body.token,
+      token: req.body.fcm_token,
       createdAt: new Date(),
     };
     const options = {
